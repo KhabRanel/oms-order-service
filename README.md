@@ -29,6 +29,7 @@ Order Service отвечает за:
 
 ## 🧱 Architecture Overview
 
+```mermaid
 flowchart TD
 Client[Client / API Consumer]
 
@@ -61,7 +62,7 @@ Client[Client / API Consumer]
     OutboxPublisher --> Outbox
     OutboxPublisher --> Kafka
     Kafka --> Topic
-
+```
 
 ### Ключевая идея
 Состояние заказа и событие сохраняются **в одной транзакции**, а публикация в Kafka
@@ -83,6 +84,7 @@ Client[Client / API Consumer]
 6. Outbox Publisher публикует событие в Kafka
 7. Событие становится доступным другим сервисам
 
+```mermaid
 sequenceDiagram
 participant Client
 participant OrderService
@@ -110,7 +112,7 @@ participant Kafka
     Outbox->>DB: fetch unpublished OutboxEvents
     Outbox->>Kafka: publish OrderCreated event
     Outbox->>DB: mark event as published
-
+```
 ---
 
 ## 🧠 Key Patterns Used
